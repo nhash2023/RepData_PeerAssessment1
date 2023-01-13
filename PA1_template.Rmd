@@ -1,25 +1,97 @@
 ---
-title: "Reproducible Research: Peer Assessment 1"
-output: 
-  html_document:
-    keep_md: true
+title: "PA1_template"
+author: "Hasitha N"
+date: "2023-01-13"
+output: html_document
 ---
 
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
 
-## Loading and preprocessing the data
+##Loading and processing the data
 
+data <- read.csv("C:\\Users\\14084\\OneDrive\\Documents\\Python Scripts\\repdata_data_activity\\activity.csv"
+               , header = TRUE)
+data$date <- as.Date(data$date, "%Y-%m-%d")
 
-
-## What is mean total number of steps taken per day?
-
-
-
-## What is the average daily activity pattern?
-
-
-
-## Imputing missing values
-
+#Ignore the missing values in the dataset
+data2 <- data[!is.na(data$steps),]
+summary(data2)
 
 
-## Are there differences in activity patterns between weekdays and weekends?
+##What is mean total number of steps taken per day?
+
+#Compute the total number of steps per day
+data2.total <- aggregate(steps ~ date, data=data2, FUN=sum)
+head(data2.total)
+
+#Display histogram of the total number of steps
+hist(data2.total$steps, xlab="Steps", main = "Total Number of Steps per Day")
+
+#Show mean and median
+mean(data2.total$steps)
+median(data2.total$steps)
+
+
+##What is the average daily activity pattern?
+
+#Compute average number of steps per interval
+data3 <- data2 %>% group_by(interval) %>% summarize(avg_steps=mean(steps))
+str(data3)
+
+#Plot using line chart
+plot(x=data3$interval, y=data3$avg_steps, type="l", xlab = "Interval", ylab="Average Number of Steps",
+     main = "Average Number of Steps Across all Dates per Interval")
+
+#Show the rowdata containing the maximum number of steps
+data3[which.max(data3$avg_steps),]
+
+
+##Imputing missing values
+
+#Only steps column contains NAs
+summary(data)
+
+#Count NA rows in steps column
+sum(is.na(data$steps))
+
+#Create copy of original dataset
+data4 <- data
+
+#Join with data which already contains the average steps per interval
+data4.imp <- inner_join(x = data4, y = data3, by="interval") 
+summary(data4.imp)
+
+#Get the mean value for those with null steps
+data4.imp[is.na(data4.imp$steps),"steps"] <- data4.imp[is.na(data4.imp$steps),]$avg_steps
+
+#Now there are no NAs
+summary(data4.imp)
+anyNA(data4.imp$steps)   #output should show FALSE
+
+# Calculate total for the histogram
+data4.imp.total <- aggregate(steps ~ date, data=data4.imp, FUN=sum)
+
+# Show histogram
+hist(data4.imp.total$steps, xlab="Steps", main = "Total Number of Steps per Day with Imputed Values")
+
+# Compute the mean and median
+summary(data4.imp.total)
+mean(data4.imp.total$steps)
+median(data4.imp.total$steps)
+
+
+##Are there differences in activity patterns between weekdays and weekends?
+
+data4.imp[weekdays(data4.imp$date, TRUE) %in% c("Sat", "Sun"), "day"] <-  "weekend"
+data4.imp[!weekdays(data4.imp$date, TRUE) %in% c("Sat", "Sun"), "day"] <-  "weekday"
+
+data5 <- data4.imp %>% group_by(interval,day) %>% summarize(avg_steps2=mean(steps)) %>% select(interval, avg_steps2, day)
+
+graph <-  ggplot(data5, aes(interval,avg_steps2)) + geom_line() + 
+  ggtitle("Weekend vs Weekday Average Steps per Interval") + 
+  labs(x="Interval", y="Average Number of Steps")
+graph + facet_grid( day ~ . ) 
+
+
