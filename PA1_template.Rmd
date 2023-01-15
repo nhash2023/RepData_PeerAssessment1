@@ -1,18 +1,18 @@
-``` yaml
+``` YAML
 ---
 title: "PA1_template"
 author: "Hasitha N"
 date: "2023-01-13"
-output:
-  html_document: default
-      keep_md: true
+output: md_document:
+    variant: markdown_github
 ---
 ```
 
-```{r setup, include=FALSE}
+```{r knitr}
 knitr::opts_chunk$set(echo = TRUE)
 library(ggplot2)
 library(dplyr)
+library(knitr)
 ```
 
 ## Loading and processing the data
@@ -128,3 +128,4 @@ graph <-  ggplot(data5, aes(interval,avg_steps2)) + geom_line() +
 graph + facet_grid( day ~ . ) 
 
 ```
+
