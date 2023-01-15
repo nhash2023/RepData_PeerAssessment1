@@ -352,14 +352,25 @@ display: none;
 </div>
 
 
-<pre class="yaml"><code>---
+<pre><code>---
 title: &quot;PA1_template&quot;
 author: &quot;Hasitha N&quot;
 date: &quot;2023-01-13&quot;
-output:
-  html_document: default
-      keep_md: true
+output: md_document:
+    variant: markdown_github
 ---</code></pre>
+<pre class="r"><code>knitr::opts_chunk$set(echo = TRUE)
+library(ggplot2)
+library(dplyr)</code></pre>
+<pre><code>## 
+## Attaching package: &#39;dplyr&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:stats&#39;:
+## 
+##     filter, lag</code></pre>
+<pre><code>## The following objects are masked from &#39;package:base&#39;:
+## 
+##     intersect, setdiff, setequal, union</code></pre>
+<pre class="r"><code>library(knitr)</code></pre>
 <div id="loading-and-processing-the-data" class="section level2">
 <h2>Loading and processing the data</h2>
 <pre class="r"><code>data &lt;- read.csv(&quot;C:\\Users\\14084\\OneDrive\\Documents\\Python Scripts\\repdata_data_activity\\activity.csv&quot;
