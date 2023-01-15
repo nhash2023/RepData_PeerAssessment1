@@ -207,7 +207,7 @@ data4.imp.total <- aggregate(steps ~ date, data=data4.imp, FUN=sum)
 hist(data4.imp.total$steps, xlab="Steps", main = "Total Number of Steps per Day with Imputed Values")
 ```
 
-![plot of chunk histogram](figure/histogram-1.png)
+(figure/histogram-1.png)
 
 ```r
 # Compute the mean and median
@@ -263,32 +263,6 @@ graph <-  ggplot(data5, aes(interval,avg_steps2)) + geom_line() +
 graph + facet_grid( day ~ . ) 
 ```
 
-![plot of chunk data4](figure/data4-1.png)
+(figure/data4-1.png)
 
 
-```r
-install.packages("knitr")
-```
-
-```
-## Warning in install.packages :
-##   package 'knitr' is in use and will not be installed
-```
-
-```r
-library(knitr)
-knit2html("C:\\Users\\14084\\OneDrive\\Documents\\Python Scripts\\PA1_template.Rmd")
-```
-
-```
-## 
-## 
-## processing file: C:\Users\14084\OneDrive\Documents\Python Scripts\PA1_template.Rmd
-```
-
-```
-## Error in parse_block(g[-1], g[1], params.src, markdown_mode): Duplicate chunk label 'setup', which has been used for the chunk:
-## knitr::opts_chunk$set(echo = TRUE)
-## library(ggplot2)
-## library(dplyr)
-```
