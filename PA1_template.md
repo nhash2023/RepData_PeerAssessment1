@@ -207,7 +207,7 @@ data4.imp.total <- aggregate(steps ~ date, data=data4.imp, FUN=sum)
 hist(data4.imp.total$steps, xlab="Steps", main = "Total Number of Steps per Day with Imputed Values")
 ```
 
-![plot of chunk histogram](figure/histogram-1.png)
+![plot of chunk histogram](figure\histogram-1.png)
 
 ```r
 # Compute the mean and median
@@ -263,7 +263,7 @@ graph <-  ggplot(data5, aes(interval,avg_steps2)) + geom_line() +
 graph + facet_grid( day ~ . ) 
 ```
 
-![plot of chunk data4](figure/data4-1.png)
+![plot of chunk data4](figure\data4-1.png)
 
 
 ```r
