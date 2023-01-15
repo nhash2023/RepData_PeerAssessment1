@@ -207,7 +207,7 @@ data4.imp.total <- aggregate(steps ~ date, data=data4.imp, FUN=sum)
 hist(data4.imp.total$steps, xlab="Steps", main = "Total Number of Steps per Day with Imputed Values")
 ```
 
-![plot of chunk histogram](figure\histogram-1.png)
+(figure\histogram-1.png)
 
 ```r
 # Compute the mean and median
